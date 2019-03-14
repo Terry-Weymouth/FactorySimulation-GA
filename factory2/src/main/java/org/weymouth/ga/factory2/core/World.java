@@ -8,68 +8,53 @@ public class World {
 	public static final int HEIGHT = 800;
 	public static final int WIDTH = 800;
 
-	List<Belt> normalBelts = new ArrayList<Belt>();
 	List<Belt> allBelts = new ArrayList<Belt>();
-	SorterBelt sbelt;
-	Belt sortRunoffBelt;
 
 	public World() {
 		double x = 150.0;
 		double y = 150.0;
 		double length = 200.0;
-		Belt belt = new StreightBelt(new Location(x, y), length, Belt.Orientation.EAST);
-		normalBelts.add(belt);
-		allBelts.add(belt);
+		StreightBelt segA = new StreightBelt(new Location(x, y), length, Belt.Orientation.EAST);
+		allBelts.add(segA);
 
 		x += length;
-		double runoffX = x + 50.0;
 		y = 150.0;
 		length = 100.0;
-		sbelt = new SorterBelt(new Location(x, y), length, Belt.Orientation.EAST);
-		normalBelts.add(sbelt);
-		allBelts.add(sbelt);
-
+		SorterBelt sorter = new SorterBelt(new Location(x, y), length, Belt.Orientation.EAST);
+		allBelts.add(sorter);
+				
 		x += length;
 		y = 150.0;
 		length = 200.0;
-		belt = new StreightBelt(new Location(x, y), length, Belt.Orientation.EAST);
-		normalBelts.add(belt);
-		allBelts.add(belt);
-
-		x += length + 50.0;
-		y += 50.0;
+		StreightBelt segB = new StreightBelt(new Location(x, y), length, Belt.Orientation.EAST);
+		allBelts.add(segB);
+		
+		x = 150.0 + 200.0 + 50.0;
+		y = 150.0 + 50.0;
 		length = 500.0;
-		Belt beltTwo = new StreightBelt(new Location(x, y), length, Belt.Orientation.SOUTH);
-		normalBelts.add(beltTwo);
-		allBelts.add(beltTwo);
+		StreightBelt drain1 = new StreightBelt(new Location(x, y), length, Belt.Orientation.SOUTH);
+		allBelts.add(drain1);
 
-		length = 500.0;
-		sortRunoffBelt = new StreightBelt(new Location(runoffX, y), length, Belt.Orientation.SOUTH);
-		allBelts.add(sortRunoffBelt);
+		segA.linkUp(sorter);
+		sorter.linkUp(segB);
+		sorter.linkUpDrain(drain1);
 	}
 
 	public void add(Thing t) {
-		normalBelts.get(0).add(t);
+		allBelts.get(0).add(t);
 	}
 
 	public List<Thing> update() {
-		List<Thing> runOff = normalBelts.get(0).update();
-		for (int i = 1; i < normalBelts.size(); i++) {
-			for (Thing t : runOff) {
-				normalBelts.get(i).add(t);
-			}
-			runOff = normalBelts.get(i).update();
+		List<Thing> runOff = new ArrayList<Thing>();
+		for (Belt b : allBelts) {
+			List<Thing> more = b.update();
+			runOff.addAll(more);
 		}
-		for (Thing t : sbelt.dumpSortedOut()) {
-			sortRunoffBelt.add(t);
-		}
-		List<Thing> moreRunoff = sortRunoffBelt.update();
-		runOff.addAll(moreRunoff);
 		return runOff;
 	}
 
 	public boolean isLive() {
-		for (Belt b : normalBelts) {
+		for (Belt b : allBelts) {
 			if (b.hasThings())
 				return true;
 		}

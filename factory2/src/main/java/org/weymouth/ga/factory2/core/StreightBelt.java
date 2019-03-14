@@ -15,6 +15,7 @@ public class StreightBelt implements Belt {
 	private double speed = 1.0;
 	private double width = 100.0;
 	protected List<Thing> objects = new ArrayList<Thing>();
+	protected Belt next = null;
 
 	public StreightBelt(Location startLocation, double l, Belt.Orientation o) {
 		orientation = o;
@@ -37,6 +38,10 @@ public class StreightBelt implements Belt {
 			graphicsHeight = (float) length;
 			graphicsWidth = (float) width;
 		}
+	}
+	
+	public void linkUp(Belt nextBelt) {
+		next = nextBelt;
 	}
 
 	public void add(Thing t) {
@@ -73,6 +78,12 @@ public class StreightBelt implements Belt {
 			}
 		}
 		objects.removeAll(goneThings);
+		if (next != null) {
+			for (Thing t: goneThings) {
+				next.handoff(t);
+			}
+			goneThings = new ArrayList<Thing>();
+		}
 		return goneThings;
 	}
 

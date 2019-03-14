@@ -7,6 +7,7 @@ public class SorterBelt extends StreightBelt {
 
 	List<Thing> sortedOut = new ArrayList<Thing>();
 	List<Thing> runoff = new ArrayList<Thing>();
+	Belt drain = null;
 
 	public SorterBelt(Location startLocation, double l, Belt.Orientation o) {
 		super(startLocation, l, o);
@@ -21,6 +22,7 @@ public class SorterBelt extends StreightBelt {
 			}
 		}
 		objects.removeAll(runoff);
+		drainSortedOut();
 		return super.update();
 	}
 
@@ -29,9 +31,22 @@ public class SorterBelt extends StreightBelt {
 		return c.g < 128;
 	}
 
-	public List<Thing> dumpSortedOut() {
-		List<Thing> dump = sortedOut;
+	private void drainSortedOut() {
+		if (drain != null) {
+			for (Thing t: sortedOut) {
+				double x = 50.0 - (t.y - drain.y());
+				double y = 0.0;
+				x += drain.x();
+				y += drain.y();
+				t.x = x;
+				t.y = y;
+				drain.handoff(t);
+			}
+		}
 		sortedOut = new ArrayList<Thing>();
-		return dump;
+	}
+
+	public void linkUpDrain(StreightBelt theDrain) {
+		drain = theDrain;
 	}
 }
