@@ -3,12 +3,12 @@ package org.weymouth.ga.factory2.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SorterBelt extends Belt {
+public class SorterBelt extends StreightBelt {
 
 	List<Thing> sortedOut = new ArrayList<Thing>();
 	List<ThingOnBelt> runoff = new ArrayList<ThingOnBelt>();
 
-	public SorterBelt(Location startLocation, double l, Orientation o) {
+	public SorterBelt(Location startLocation, double l, Belt.Orientation o) {
 		super(startLocation, l, o);
 	}
 

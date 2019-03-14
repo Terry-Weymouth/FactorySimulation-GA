@@ -17,7 +17,7 @@ public class World {
 		double x = 150.0;
 		double y = 150.0;
 		double length = 200.0;
-		Belt belt = new Belt(new Location(x, y), length, Belt.Orientation.HORIZONTAL);
+		Belt belt = new StreightBelt(new Location(x, y), length, Belt.Orientation.HORIZONTAL);
 		normalBelts.add(belt);
 		allBelts.add(belt);
 
@@ -32,19 +32,19 @@ public class World {
 		x += length;
 		y = 150.0;
 		length = 200.0;
-		belt = new Belt(new Location(x, y), length, Belt.Orientation.HORIZONTAL);
+		belt = new StreightBelt(new Location(x, y), length, Belt.Orientation.HORIZONTAL);
 		normalBelts.add(belt);
 		allBelts.add(belt);
 
 		x += length + 50.0;
 		y += 50.0;
 		length = 500.0;
-		Belt beltTwo = new Belt(new Location(x, y), length, Belt.Orientation.VETRICAL);
+		Belt beltTwo = new StreightBelt(new Location(x, y), length, Belt.Orientation.VETRICAL);
 		normalBelts.add(beltTwo);
 		allBelts.add(beltTwo);
 
 		length = 500.0;
-		sortRunoffBelt = new Belt(new Location(runoffX, y), length, Belt.Orientation.VETRICAL);
+		sortRunoffBelt = new StreightBelt(new Location(runoffX, y), length, Belt.Orientation.VETRICAL);
 		allBelts.add(sortRunoffBelt);
 	}
 
