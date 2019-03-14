@@ -21,21 +21,25 @@ public class ViewWorldSimulation {
 	}
 
 	public void driveExampleSimulation() {
-		Thing[] theThings = { new Thing(new Color(255, 0, 0)), new Thing(new Color(0, 255, 0)),
-				new Thing(new Color(0, 0, 255)), new Thing(new Color(255, 255, 0)), new Thing(new Color(255, 0, 255)),
-				new Thing(new Color(0, 255, 255)) };
-		for (int i = 0; i < 15; i++) {
-			for (Thing t : theThings) {
-				theWorld.add(t);
-				runForAwhile();
-			}
-		}
+		runInNewThings();
 		runAllOut();
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException ignore) {
 		}
 		worldController.close();
+	}
+
+	private void runInNewThings() {
+		for (int r = 0; r < 256; r += 32) {
+			for (int g = 0; g < 256; g += 32) {
+				for (int b = 0; b < 256; b += 32) {
+					Thing t = new Thing(new Color(r, g, b));
+					theWorld.add(t);
+					runForAwhile();
+				}
+			}
+		}
 	}
 
 	private void runForAwhile() {

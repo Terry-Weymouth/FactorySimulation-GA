@@ -26,7 +26,7 @@ public class SorterBelt extends Belt {
 
 	private boolean isSortedOut(ThingOnBelt holder) {
 		Color c = holder.thing.color;
-		return c.r == 255 && c.b == 0 && c.g == 0;
+		return c.g < 128;
 	}
 
 	public List<Thing> dumpSortedOut() {
