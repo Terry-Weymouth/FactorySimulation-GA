@@ -2,6 +2,7 @@ package org.weymouth.ga.factory1.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Belt {
 
@@ -9,6 +10,7 @@ public class Belt {
 		HORIZONTAL, VETRICAL
 	};
 
+	private final Random random = new Random();
 	private final Location start, stop;
 	private final double length;
 	private final double dx, dy;
@@ -42,7 +44,19 @@ public class Belt {
 	}
 
 	public void add(Thing t) {
-		objects.add(new ThingOnBelt(t, start.x, start.y));
+		double jiggle = random.nextGaussian();
+		while (jiggle > 1.0 || jiggle < -1.0) {
+			jiggle = random.nextGaussian();
+		}
+		jiggle = (width / 2.0 - 10.0) * jiggle;
+		double x = start.x;
+		double y = start.y;
+		if (orientation.equals(Orientation.HORIZONTAL)) {
+			y += jiggle;
+		} else {
+			x += jiggle;
+		}
+		objects.add(new ThingOnBelt(t, x, y));
 	}
 
 	public List<Thing> update() {
@@ -90,7 +104,7 @@ public class Belt {
 		return graphicsWidth;
 	}
 
-	public List<ThingOnBelt> getThinkHoldersCopy() {
+	public List<ThingOnBelt> getThingHoldersCopy() {
 		return new ArrayList<ThingOnBelt>(objects);
 	}
 
