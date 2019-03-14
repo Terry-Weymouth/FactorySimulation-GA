@@ -12,6 +12,7 @@ public class Belt {
 	private final Location start, stop;
 	private final double length;
 	private final double dx, dy;
+	private final float graphicsX, graphicsY, graphicsWidth, graphicsHeight;
 	private final Orientation orientation;
 	private double speed = 1.0;
 	private double width = 100.0;
@@ -25,19 +26,23 @@ public class Belt {
 			stop = new Location(start.x + length, start.y);
 			dx = 1.0;
 			dy = 0.0;
+			graphicsX = (float) start.x;
+			graphicsY = (float) (start.y - (width / 2.0));
+			graphicsHeight = (float) width;
+			graphicsWidth = (float) length;
 		} else {
 			stop = new Location(start.x, start.y + length);
 			dx = 0.0;
 			dy = 1.0;
+			graphicsX = (float) (start.x - (width / 2.0));
+			graphicsY = (float) start.y;
+			graphicsHeight = (float) length;
+			graphicsWidth = (float) width;
 		}
 	}
 
 	public void add(Thing t) {
-		ThingOnBelt holder = new ThingOnBelt();
-		holder.thing = t;
-		holder.x = start.x;
-		holder.y = start.y;
-		objects.add(holder);
+		objects.add(new ThingOnBelt(t, start.x, start.y));
 	}
 
 	public List<Thing> update() {
@@ -65,10 +70,28 @@ public class Belt {
 		return false;
 	}
 
-	private class ThingOnBelt {
-		Thing thing;
-		double x;
-		double y;
+	public boolean hasThings() {
+		return !objects.isEmpty();
+	}
+
+	public float x() {
+		return graphicsX;
+	}
+
+	public float y() {
+		return graphicsY;
+	}
+
+	public float height() {
+		return graphicsHeight;
+	}
+
+	public float width() {
+		return graphicsWidth;
+	}
+
+	public List<ThingOnBelt> getThinkHoldersCopy() {
+		return new ArrayList<ThingOnBelt>(objects);
 	}
 
 }

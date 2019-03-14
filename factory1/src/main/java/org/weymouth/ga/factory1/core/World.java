@@ -35,4 +35,16 @@ public class World {
 		return runOff;
 	}
 
+	public boolean isLive() {
+		for (Belt b : belts) {
+			if (b.hasThings())
+				return true;
+		}
+		return false;
+	}
+
+	public List<Belt> getBelts() {
+		return belts;
+	}
+
 }
