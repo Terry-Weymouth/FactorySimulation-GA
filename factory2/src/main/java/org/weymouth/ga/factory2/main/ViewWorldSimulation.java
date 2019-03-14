@@ -1,12 +1,12 @@
-package org.weymouth.ga.factory1.main;
+package org.weymouth.ga.factory2.main;
 
 import java.util.List;
 
-import org.weymouth.ga.factory1.core.Color;
-import org.weymouth.ga.factory1.core.Thing;
-import org.weymouth.ga.factory1.core.World;
-import org.weymouth.ga.factory1.core.WorldView;
-import org.weymouth.ga.factory1.core.WorldViewController;
+import org.weymouth.ga.factory2.core.Color;
+import org.weymouth.ga.factory2.core.Thing;
+import org.weymouth.ga.factory2.core.World;
+import org.weymouth.ga.factory2.core.WorldView;
+import org.weymouth.ga.factory2.core.WorldViewController;
 
 import processing.core.PApplet;
 

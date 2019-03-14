@@ -1,4 +1,4 @@
-package org.weymouth.ga.factory1.core;
+package org.weymouth.ga.factory2.core;
 
 public class Location {
 

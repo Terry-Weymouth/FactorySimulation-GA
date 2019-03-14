@@ -1,4 +1,4 @@
-package org.weymouth.ga.factory1.main;
+package org.weymouth.ga.factory2.main;
 
 public class Main {
 
