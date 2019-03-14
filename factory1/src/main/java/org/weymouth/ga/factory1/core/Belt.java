@@ -18,7 +18,7 @@ public class Belt {
 	private final Orientation orientation;
 	private double speed = 1.0;
 	private double width = 100.0;
-	private List<ThingOnBelt> objects = new ArrayList<ThingOnBelt>();
+	protected List<ThingOnBelt> objects = new ArrayList<ThingOnBelt>();
 
 	public Belt(Location startLocation, double l, Orientation o) {
 		orientation = o;
