@@ -14,7 +14,7 @@ public class StreightBelt implements Belt {
 	private final Orientation orientation;
 	private double speed = 1.0;
 	private double width = 100.0;
-	protected List<ThingOnBelt> objects = new ArrayList<ThingOnBelt>();
+	protected List<Thing> objects = new ArrayList<Thing>();
 
 	public StreightBelt(Location startLocation, double l, Belt.Orientation o) {
 		orientation = o;
@@ -52,35 +52,35 @@ public class StreightBelt implements Belt {
 		} else {
 			x += jiggle;
 		}
-		objects.add(new ThingOnBelt(t, x, y));
+		t.x = x;
+		t.y = y;
+		objects.add(t);
 	}
-	
+
 	public void handoff(Thing t) {
-		double x = start.x;
-		double y = start.y;
-		objects.add(new ThingOnBelt(t, x, y));		
+		objects.add(t);
 	}
 
 	public List<Thing> update() {
 		List<Thing> runOff = new ArrayList<Thing>();
-		List<ThingOnBelt> goneHolders = new ArrayList<ThingOnBelt>();
-		for (ThingOnBelt holder : objects) {
-			holder.x += dx * speed;
-			holder.y += dy * speed;
-			if (isOffBelt(holder)) {
-				goneHolders.add(holder);
-				runOff.add(holder.thing);
+		List<Thing> goneThings = new ArrayList<Thing>();
+		for (Thing t : objects) {
+			t.x += dx * speed;
+			t.y += dy * speed;
+			if (isOffBelt(t)) {
+				goneThings.add(t);
+				runOff.add(t);
 			}
 		}
-		objects.removeAll(goneHolders);
-		return runOff;
+		objects.removeAll(goneThings);
+		return goneThings;
 	}
 
-	private boolean isOffBelt(ThingOnBelt holder) {
-		if (orientation.equals(Belt.Orientation.EAST) && (holder.x > stop.x)) {
+	private boolean isOffBelt(Thing t) {
+		if (orientation.equals(Belt.Orientation.EAST) && (t.x > stop.x)) {
 			return true;
 		}
-		if (orientation.equals(Belt.Orientation.SOUTH) && (holder.y > stop.y)) {
+		if (orientation.equals(Belt.Orientation.SOUTH) && (t.y > stop.y)) {
 			return true;
 		}
 		return false;
@@ -106,8 +106,8 @@ public class StreightBelt implements Belt {
 		return graphicsWidth;
 	}
 
-	public List<ThingOnBelt> getThingHoldersCopy() {
-		return new ArrayList<ThingOnBelt>(objects);
+	public List<Thing> getThingsCopy() {
+		return new ArrayList<Thing>(objects);
 	}
 
 }

@@ -36,11 +36,11 @@ public class WorldView extends PApplet {
 		}
 		stroke(0);
 		for (Belt b : belts) {
-			List<ThingOnBelt> holders = b.getThingHoldersCopy();
-			for (ThingOnBelt t : holders) {
+			List<Thing> things = b.getThingsCopy();
+			for (Thing t : things) {
 				if (t != null) {
-					Color c = t.thing.color;
-					float r = (float) t.thing.radius;
+					Color c = t.color;
+					float r = (float) t.radius;
 					float x = (float) t.x;
 					float y = (float) t.y;
 					fill(c.r, c.g, c.b);

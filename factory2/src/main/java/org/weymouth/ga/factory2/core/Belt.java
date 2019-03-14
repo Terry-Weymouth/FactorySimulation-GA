@@ -18,6 +18,6 @@ public interface Belt {
 	public float y();
 	public float height();
 	public float width();
-	public List<ThingOnBelt> getThingHoldersCopy();
+	public List<Thing> getThingsCopy();
 
 }

@@ -8,6 +8,9 @@ public class Thing {
 	public final double radius = 10.0;
 	public int id = count++;
 
+	public double x = 0.0;
+	public double y = 0.0;
+		
 	public Thing(Color c) {
 		color = c;
 	}
