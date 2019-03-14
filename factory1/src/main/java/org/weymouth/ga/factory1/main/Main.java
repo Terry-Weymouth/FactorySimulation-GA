@@ -1,6 +1,6 @@
-package factory1;
+package org.weymouth.ga.factory1.main;
 
-public class HelloWorld {
+public class Main {
 
 	public static void main(String[] args) {
 		System.out.println("Hello");
