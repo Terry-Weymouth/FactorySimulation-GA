@@ -20,7 +20,7 @@ public class StreightBelt implements Belt {
 		orientation = o;
 		start = startLocation;
 		length = l;
-		if (orientation.equals(Belt.Orientation.HORIZONTAL)) {
+		if (orientation.equals(Belt.Orientation.EAST)) {
 			stop = new Location(start.x + length, start.y);
 			dx = 1.0;
 			dy = 0.0;
@@ -47,7 +47,7 @@ public class StreightBelt implements Belt {
 		jiggle = (width / 2.0 - 10.0) * jiggle;
 		double x = start.x;
 		double y = start.y;
-		if (orientation.equals(Belt.Orientation.HORIZONTAL)) {
+		if (orientation.equals(Belt.Orientation.EAST)) {
 			y += jiggle;
 		} else {
 			x += jiggle;
@@ -77,10 +77,10 @@ public class StreightBelt implements Belt {
 	}
 
 	private boolean isOffBelt(ThingOnBelt holder) {
-		if (orientation.equals(Belt.Orientation.HORIZONTAL) && (holder.x > stop.x)) {
+		if (orientation.equals(Belt.Orientation.EAST) && (holder.x > stop.x)) {
 			return true;
 		}
-		if (orientation.equals(Belt.Orientation.VETRICAL) && (holder.y > stop.y)) {
+		if (orientation.equals(Belt.Orientation.SOUTH) && (holder.y > stop.y)) {
 			return true;
 		}
 		return false;

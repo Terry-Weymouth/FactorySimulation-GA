@@ -5,7 +5,7 @@ import java.util.List;
 public interface Belt {
 
 	public enum Orientation {
-		HORIZONTAL, VETRICAL
+		EAST, WEST, SOUTH, NORTH
 	};
 
 	public void add(Thing t);
