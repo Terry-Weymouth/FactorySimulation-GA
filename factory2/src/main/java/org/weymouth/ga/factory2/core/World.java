@@ -29,15 +29,31 @@ public class World {
 		StreightBelt segB = new StreightBelt(new Location(x, y), length, Belt.Orientation.EAST);
 		allBelts.add(segB);
 		
+		x += length + 50.0;
+		y += 50.0;
+		length = 500.0;
+		StreightBelt drain2 = new StreightBelt(new Location(x, y), length, Belt.Orientation.SOUTH);
+		allBelts.add(drain2);
+		
+		x = 150.0 + 500.0;
+		y = 150.0;
+		length = 100.0;
+		CornerBelt corner = new CornerBelt(new Location(x, y), length, Belt.Orientation.EAST);
+		allBelts.add(corner);
+
 		x = 150.0 + 200.0 + 50.0;
 		y = 150.0 + 50.0;
 		length = 500.0;
 		StreightBelt drain1 = new StreightBelt(new Location(x, y), length, Belt.Orientation.SOUTH);
 		allBelts.add(drain1);
+		
+		
 
 		segA.linkUp(sorter);
 		sorter.linkUp(segB);
 		sorter.linkUpDrain(drain1);
+		segB.linkUp(corner);
+		corner.linkUp(drain2);
 	}
 
 	public void add(Thing t) {

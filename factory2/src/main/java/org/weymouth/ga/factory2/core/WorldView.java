@@ -32,7 +32,20 @@ public class WorldView extends PApplet {
 		stroke(255);
 		List<Belt> belts = theWorld.getBelts();
 		for (Belt b : belts) {
-			rect(b.x(), b.y(), b.width(), b.height());
+			if (b instanceof CornerBelt) {
+				arc(b.x(), b.y() + b.height(), 2.0f * b.width(), 2.0f * b.height(), PI+HALF_PI, PI + PI, PIE);
+			} else {
+				rect(b.x(), b.y(), b.width(), b.height());
+				if (b instanceof SorterBelt) {
+					stroke(100,100);
+					float x1 = b.x();
+					float y1 = b.y() + b.height();
+					float x2 = x1 + b.width();
+					float y2 = y1 - b.height();
+					line(x1,y1,x2,y2);
+					stroke(255);
+				}
+			}
 		}
 		stroke(0);
 		for (Belt b : belts) {

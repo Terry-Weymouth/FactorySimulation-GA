@@ -16,7 +16,9 @@ public class SorterBelt extends StreightBelt {
 	@Override
 	public List<Thing> update() {
 		for (Thing t : objects) {
-			if (isSortedOut(t)) {
+			float dx = (float)t.x - x();
+			float dy = height() - ((float)t.y - y());
+			if ((dx >= dy) && isSortedOut(t)) {
 				sortedOut.add(t);
 				runoff.add(t);
 			}
@@ -34,12 +36,6 @@ public class SorterBelt extends StreightBelt {
 	private void drainSortedOut() {
 		if (drain != null) {
 			for (Thing t: sortedOut) {
-				double x = 50.0 - (t.y - drain.y());
-				double y = 0.0;
-				x += drain.x();
-				y += drain.y();
-				t.x = x;
-				t.y = y;
 				drain.handoff(t);
 			}
 		}

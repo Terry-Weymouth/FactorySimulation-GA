@@ -4,35 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class StreightBelt implements Belt {
+public class CornerBelt implements Belt {
+	
+	private static final double DELTA_THETA = Math.PI/180.0;
 
 	private final Random random = new Random();
-	private final Location start, stop;
+	private final Location start;
 	private final double length;
-	private final double dx, dy;
 	private final float graphicsX, graphicsY, graphicsWidth, graphicsHeight;
 	private final Orientation orientation;
-	private double speed = 1.0;
 	private double width = 100.0;
 	protected List<Thing> objects = new ArrayList<Thing>();
 	protected Belt next = null;
 
-	public StreightBelt(Location startLocation, double l, Belt.Orientation o) {
+	public CornerBelt(Location startLocation, double l, Belt.Orientation o) {
 		orientation = o;
 		start = startLocation;
 		length = l;
 		if (orientation.equals(Belt.Orientation.EAST)) {
-			stop = new Location(start.x + length, start.y);
-			dx = 1.0;
-			dy = 0.0;
 			graphicsX = (float) start.x;
 			graphicsY = (float) (start.y - (width / 2.0));
 			graphicsHeight = (float) width;
 			graphicsWidth = (float) length;
 		} else {
-			stop = new Location(start.x, start.y + length);
-			dx = 0.0;
-			dy = 1.0;
 			graphicsX = (float) (start.x - (width / 2.0));
 			graphicsY = (float) start.y;
 			graphicsHeight = (float) length;
@@ -69,8 +63,14 @@ public class StreightBelt implements Belt {
 	public List<Thing> update() {
 		List<Thing> goneThings = new ArrayList<Thing>();
 		for (Thing t : objects) {
-			t.x += dx * speed;
-			t.y += dy * speed;
+			double xx = t.x - start.x;
+			double yy = - (t.y - start.y - 50.0);
+			double r = Math.sqrt(xx*xx + yy*yy);
+			double theta = Math.acos(yy/r) + DELTA_THETA;
+			double xp = r * Math.sin(theta);
+			double yp = r * Math.cos(theta);
+			t.x += (xp - xx);
+			t.y += (yy - yp);
 			if (isOffBelt(t)) {
 				goneThings.add(t);
 			}
@@ -86,13 +86,7 @@ public class StreightBelt implements Belt {
 	}
 
 	private boolean isOffBelt(Thing t) {
-		if (orientation.equals(Belt.Orientation.EAST) && (t.x > stop.x)) {
-			return true;
-		}
-		if (orientation.equals(Belt.Orientation.SOUTH) && (t.y > stop.y)) {
-			return true;
-		}
-		return false;
+		return t.y > (start.y + 50.0);
 	}
 
 	public boolean hasThings() {
