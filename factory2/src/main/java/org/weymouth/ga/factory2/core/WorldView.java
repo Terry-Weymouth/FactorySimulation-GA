@@ -8,20 +8,39 @@ import processing.core.PImage;
 public class WorldView extends PApplet {
 
 	World theWorld = null;
-	ColorPicker cp;
 	Color worldThreshold = null;
 	boolean thresholdSet = false;
-
+	WorldViewController viewController = null;
+	
+	boolean stop = false;
+	
+	ColorPicker cp;
+	int cpX = 10;
+	int cpY = 600;
+	int cpW = 200;
+	int cpH = 150;
+	int cpC = 0xFFFFFF;
+	
+	Button sb;
+	int sbX = 20;
+	int sbY = 520;
+	String sbText = "Stop";
+	
 	public void settings() {
 		size(World.WIDTH, World.HEIGHT);
 		WorldViewController.getController().register(this);
-		cp = new ColorPicker(5, 600, 200, 150, 0xFFFFFF);
+		cp = new ColorPicker(cpX, cpY, cpW, cpH, cpC);
+		sb = new Button(sbX, sbY, sbText);
 	}
 
 	public void setTheWorld(World w) {
 		theWorld = w;
 	}
 	
+	public void setController(WorldViewController worldViewController) {
+		viewController = worldViewController;
+	}
+
 	public boolean getThresholdSetFlag() {
 		return thresholdSet;
 	}
@@ -33,8 +52,11 @@ public class WorldView extends PApplet {
 	public void draw() {
 		background(100);
 		if (thresholdSet && theWorld != null) {
-			checkButtons();
-			drawTheWorld();			
+			if (! viewController.isDone()) {
+				drawButtons();
+				checkButtons();
+			}
+			drawTheWorld();
 		} else if (worldThreshold != null && theWorld != null) {
 			System.out.println("World Threshold - " + worldThreshold);
 			theWorld.setSorterThreshold(worldThreshold);
@@ -44,12 +66,14 @@ public class WorldView extends PApplet {
 		cp.render();
 	}
 
+	private void drawButtons() {
+		sb.render();
+	}
+
 	private void checkButtons() {
-		//if(mousePressed){
-		//	  if(mouseX>x && mouseX <x+w && mouseY>y && mouseY <y+h){
-		//	   println("The mouse is pressed and over the button");
-		// TODO Auto-generated method stub
-		//
+		if (sb.clicked()) {
+			viewController.setIsDone(true);
+		}
 	}
 
 	private void drawTheWorld() {
@@ -212,6 +236,33 @@ public class WorldView extends PApplet {
 			}
 			fill(c);
 			rect(x, y + h + 10, 20, 20);
+		}
+	}
+	
+	
+	public class Button {
+		int x, y, w, h;
+		String text;
+
+		public Button(int bX, int bY, String bText) {
+			x = bX;
+			y = bY;
+			w = 80;
+			h = 36;
+			text = bText;
+		}
+		
+		public boolean clicked() {
+			return (mousePressed && mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h);
+		}
+		
+		public void render() {
+			stroke(0);
+			fill(100);
+			rect(x, y, w, h);
+			fill(255, 255, 0);
+			textSize(30);
+			text(text, x + 8, y + h - 10); 
 		}
 	}
 

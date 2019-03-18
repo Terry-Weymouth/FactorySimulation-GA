@@ -14,6 +14,7 @@ public class WorldViewController {
 	}
 
 	WorldView theWorldView = null;
+	boolean done = false;
 
 	public void initialize(World theWorld) {
 		while (theWorldView == null) {
@@ -24,6 +25,7 @@ public class WorldViewController {
 			}
 		}
 		theWorldView.setTheWorld(theWorld);
+		theWorldView.setController(this);
 	}
 
 	public void register(WorldView aw) {
@@ -44,7 +46,11 @@ public class WorldViewController {
 	}
 
 	public boolean isDone() {
-		return false;
+		return done;
+	}
+	
+	public void setIsDone(boolean flag) {
+		done = flag;
 	}
 
 }
