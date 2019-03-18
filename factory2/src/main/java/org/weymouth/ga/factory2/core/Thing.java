@@ -10,6 +10,8 @@ public class Thing {
 
 	public double x = 0.0;
 	public double y = 0.0;
+	
+	public boolean matched = false;
 		
 	public Thing(Color c) {
 		color = c;

@@ -34,8 +34,17 @@ public class WorldViewController {
 		return theWorldView;
 	}
 
+	public boolean isReady() {
+		if (getView() == null) return false;
+		return getView().getThresholdSetFlag();
+	}
+
 	public void close() {
 		theWorldView.close();
+	}
+
+	public boolean isDone() {
+		return false;
 	}
 
 }

@@ -11,5 +11,9 @@ public class Color {
 		this.g = g;
 		this.b = b;
 	}
+	
+	public String toString() {
+		return String.format("C: %3d, %3d, %3d", r, g, b);
+	}
 
 }

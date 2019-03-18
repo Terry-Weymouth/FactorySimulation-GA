@@ -8,6 +8,7 @@ public class SorterBelt extends StreightBelt {
 	List<Thing> sortedOut = new ArrayList<Thing>();
 	List<Thing> runoff = new ArrayList<Thing>();
 	Belt drain = null;
+	Color threshold = new Color(255, 127, 255);
 
 	public SorterBelt(Location startLocation, double l, Belt.Orientation o) {
 		super(startLocation, l, o);
@@ -30,7 +31,7 @@ public class SorterBelt extends StreightBelt {
 
 	private boolean isSortedOut(Thing t) {
 		Color c = t.color;
-		return c.g < 128;
+		return c.g <= threshold.g && c.r <= threshold.r && c.b <= threshold.b;
 	}
 
 	private void drainSortedOut() {

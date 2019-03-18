@@ -23,11 +23,16 @@ public class ViewWorldSimulation {
 	}
 
 	public void driveExampleSimulation() {
-		runInNewThings();
-		runAllOut();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException ignore) {
+		while (!worldController.isReady()) {
+			waitForNext();
+		}
+		while(!worldController.isDone()) {
+			runInNewThings();
+			runAllOut();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException ignore) {
+			}
 		}
 		worldController.close();
 	}
@@ -66,11 +71,15 @@ public class ViewWorldSimulation {
 	}
 
 	private List<Thing> update() {
+		waitForNext();
+		return theWorld.update();
+	}
+
+	private void waitForNext() {
 		try {
 			Thread.sleep(20);
 		} catch (InterruptedException ignore) {
 		}
-		return theWorld.update();
 	}
 
 }

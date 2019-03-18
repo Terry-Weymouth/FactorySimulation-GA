@@ -8,12 +8,15 @@ public class World {
 	public static final int HEIGHT = 800;
 	public static final int WIDTH = 800;
 
-	List<Belt> allBelts = new ArrayList<Belt>();
+	private List<Belt> allBelts = new ArrayList<Belt>();
+	
+	private final SorterBelt sorter;
 
 	public World() {
-		double x = 150.0;
+		double x = 50.0;
 		double y = 150.0;
 		double length = 200.0;
+		double speed = 2.0;
 		StreightBelt segA = new StreightBelt(new Location(x, y), length, Belt.Orientation.EAST);
 		allBelts.add(segA);
 		
@@ -25,8 +28,20 @@ public class World {
 		
 		x += length;
 		y = 150.0;
+		length = 20.0;
+		SensorBelt s2 = new SensorBelt(new Location(x,y), length, Belt.Orientation.EAST);
+		allBelts.add(s2);
+
+		x += length;
+		y = 150.0;
+		length = 20.0;
+		SensorBelt s3 = new SensorBelt(new Location(x,y), length, Belt.Orientation.EAST);
+		allBelts.add(s3);
+
+		x += length;
+		y = 150.0;
 		length = 100.0;
-		SorterBelt sorter = new SorterBelt(new Location(x, y), length, Belt.Orientation.EAST);
+		sorter = new SorterBelt(new Location(x, y), length, Belt.Orientation.EAST);
 		allBelts.add(sorter);
 		
 		double dx = x + 50.0;
@@ -57,10 +72,14 @@ public class World {
 		StreightBelt drain1 = new StreightBelt(new Location(x, y), length, Belt.Orientation.SOUTH);
 		allBelts.add(drain1);
 		
-		
+		for (Belt b: allBelts) {
+			b.setSpeed(speed);
+		}
 
 		segA.linkUp(s1);
-		s1.linkUp(sorter);
+		s1.linkUp(s2);
+		s2.linkUp(s3);
+		s3.linkUp(sorter);
 		sorter.linkUp(segB);
 		sorter.linkUpDrain(drain1);
 		segB.linkUp(corner);
@@ -69,6 +88,10 @@ public class World {
 
 	public void add(Thing t) {
 		allBelts.get(0).add(t);
+	}
+	
+	public void setSorterThreshold(Color c) {
+		sorter.threshold = c;
 	}
 
 	public List<Thing> update() {
