@@ -46,6 +46,22 @@ public class WorldView extends PApplet {
 					stroke(255);
 				}
 			}
+			if (b instanceof SensorBelt) {
+				Color c = ((SensorBelt)b).getColor();
+				float x = b.x() + 5.0f;
+				float y = b.y() - 10.0f;
+				float w = b.width() - 10.0f;
+				float h = 5.0f;
+				if (c == null) {
+					noFill();
+					rect(x,y,w,h);
+					line(x,y,x+w,y+h);
+				} else {
+					fill(c.r, c.g, c.b);
+					rect(x,y,w,h);
+				}
+				fill(150);
+			}
 		}
 		stroke(0);
 		for (Belt b : belts) {

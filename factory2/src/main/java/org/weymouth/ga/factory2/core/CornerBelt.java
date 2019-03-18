@@ -14,6 +14,7 @@ public class CornerBelt implements Belt {
 	private final float graphicsX, graphicsY, graphicsWidth, graphicsHeight;
 	private final Orientation orientation;
 	private double width = 100.0;
+	private double speed = 1.0; 
 	protected List<Thing> objects = new ArrayList<Thing>();
 	protected Belt next = null;
 
@@ -36,6 +37,10 @@ public class CornerBelt implements Belt {
 	
 	public void linkUp(Belt nextBelt) {
 		next = nextBelt;
+	}
+
+	public void setSpeed(double s) {
+		speed = s;
 	}
 
 	public void add(Thing t) {
@@ -66,7 +71,7 @@ public class CornerBelt implements Belt {
 			double xx = t.x - start.x;
 			double yy = - (t.y - start.y - 50.0);
 			double r = Math.sqrt(xx*xx + yy*yy);
-			double theta = Math.acos(yy/r) + DELTA_THETA;
+			double theta = Math.acos(yy/r) + DELTA_THETA * speed;
 			double xp = r * Math.sin(theta);
 			double yp = r * Math.cos(theta);
 			t.x += (xp - xx);

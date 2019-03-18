@@ -8,6 +8,8 @@ public interface Belt {
 		EAST, WEST, SOUTH, NORTH
 	};
 
+	public void setSpeed(double s);
+	
 	public void add(Thing t);
 	public void handoff(Thing t);
 	public List<Thing> update();

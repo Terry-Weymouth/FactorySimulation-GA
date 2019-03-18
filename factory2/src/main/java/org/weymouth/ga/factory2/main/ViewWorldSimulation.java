@@ -67,7 +67,7 @@ public class ViewWorldSimulation {
 
 	private List<Thing> update() {
 		try {
-			Thread.sleep(5);
+			Thread.sleep(20);
 		} catch (InterruptedException ignore) {
 		}
 		return theWorld.update();

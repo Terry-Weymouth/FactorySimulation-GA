@@ -44,6 +44,10 @@ public class StreightBelt implements Belt {
 		next = nextBelt;
 	}
 
+	public void setSpeed(double s) {
+		speed = s;
+	}
+
 	public void add(Thing t) {
 		double jiggle = random.nextGaussian();
 		while (jiggle > 1.0 || jiggle < -1.0) {
