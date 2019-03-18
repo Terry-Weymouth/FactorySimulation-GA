@@ -10,7 +10,7 @@ public class World {
 
 	private List<Belt> allBelts = new ArrayList<Belt>();
 	
-	private final SorterBelt sorter;
+	private final MarkerBelt marker;
 
 	public World() {
 		double x = 50.0;
@@ -40,8 +40,14 @@ public class World {
 
 		x += length;
 		y = 150.0;
+		length = 20.0;
+		marker = new MarkerBelt(new Location(x,y), length, Belt.Orientation.EAST);
+		allBelts.add(marker);
+
+		x += length;
+		y = 150.0;
 		length = 100.0;
-		sorter = new SorterBelt(new Location(x, y), length, Belt.Orientation.EAST);
+		SorterBelt sorter = new SorterBelt(new Location(x, y), length, Belt.Orientation.EAST);
 		allBelts.add(sorter);
 		
 		double dx = x + 50.0;
@@ -79,7 +85,8 @@ public class World {
 		segA.linkUp(s1);
 		s1.linkUp(s2);
 		s2.linkUp(s3);
-		s3.linkUp(sorter);
+		s3.linkUp(marker);
+		marker.linkUp(sorter);
 		sorter.linkUp(segB);
 		sorter.linkUpDrain(drain1);
 		segB.linkUp(corner);
@@ -91,7 +98,7 @@ public class World {
 	}
 	
 	public void setSorterThreshold(Color c) {
-		sorter.threshold = c;
+		marker.threshold = c;
 	}
 
 	public List<Thing> update() {

@@ -95,21 +95,20 @@ public class WorldView extends PApplet {
 					stroke(255);
 				}
 			}
-			if (b instanceof SorterBelt) {
-				Color c = ((SorterBelt) b).threshold;
-				float start = (b.width() - 34.0f) / 2.0f;
-				float x = b.x() + start;
-				float y = b.y() - 12.0f;
+			if (b instanceof MarkerBelt) {
+				Color c = ((MarkerBelt) b).threshold;
+				float x = b.x() + 10.0f;
+				float y = b.y() - 7.0f;
 				float w = 10.0f;
 				float h = 10.0f;
-				fill(c.r, 0, 0);
-				ellipse(x + 5.0f, y + 5.0f, w, h);
-				x += 12.0f;
-				fill(0, c.g, 0);
-				ellipse(x + 5.0f, y + 5.0f, w, h);
-				x += 12.0f;
 				fill(0, 0, c.b);
-				ellipse(x + 5.0f, y + 5.0f, w, h);
+				ellipse(x, y, w, h);
+				y -= 12.0f;
+				fill(0, c.g, 0);
+				ellipse(x, y, w, h);
+				y -= 12.0f;
+				fill(c.r, 0, 0);
+				ellipse(x, y, w, h);
 				fill(150);
 			}
 			if (b instanceof SensorBelt) {

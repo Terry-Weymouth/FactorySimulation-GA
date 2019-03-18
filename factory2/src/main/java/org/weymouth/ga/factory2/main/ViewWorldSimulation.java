@@ -38,7 +38,7 @@ public class ViewWorldSimulation {
 	}
 
 	private void runInNewThings() {
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 60; i++) {
 			int r = random.nextInt(256);
 			int g = random.nextInt(256);
 			int b = random.nextInt(256);
@@ -49,7 +49,7 @@ public class ViewWorldSimulation {
 	}
 
 	private void runForAwhile() {
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 50; i++) {
 			List<Thing> overflow = update();
 //			if (!overflow.isEmpty()) {
 //				for (Thing t : overflow) {
