@@ -228,6 +228,7 @@ public class WorldView extends PApplet {
 
 		public void render() {
 			init();
+			stroke(255);
 			image(cpImage, x, y);
 			if ((worldThreshold == null) && mousePressed && mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h) {
 				c = get(mouseX, mouseY);
