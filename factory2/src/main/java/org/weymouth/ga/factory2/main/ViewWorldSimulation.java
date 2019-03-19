@@ -1,21 +1,28 @@
 package org.weymouth.ga.factory2.main;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
 import org.weymouth.ga.factory2.core.Color;
+import org.weymouth.ga.factory2.core.FactoryState;
 import org.weymouth.ga.factory2.core.Thing;
 import org.weymouth.ga.factory2.core.World;
 import org.weymouth.ga.factory2.core.WorldView;
 import org.weymouth.ga.factory2.core.WorldViewController;
+import org.weymouth.ga.factory2.io.DataFileWriter;
 
 import processing.core.PApplet;
 
 public class ViewWorldSimulation {
+	
+	public static final String stateRecorderLocation = "StateRecord.txt";
 
 	WorldViewController worldController = WorldViewController.getController();
 	World theWorld = new World();
 	private final Random random = new Random();
+	
+	RecorderHelper recorder = new RecorderHelper(stateRecorderLocation);
 
 	public ViewWorldSimulation() {
 		PApplet.main(WorldView.class);
@@ -26,6 +33,7 @@ public class ViewWorldSimulation {
 		while (!worldController.isReady()) {
 			waitForNext();
 		}
+		recorder.init();
 		while(!worldController.isDone()) {
 			runInNewThings();
 			runAllOut();
@@ -35,6 +43,7 @@ public class ViewWorldSimulation {
 			}
 		}
 		worldController.close();
+		recorder.close();
 	}
 
 	private void runInNewThings() {
@@ -50,6 +59,7 @@ public class ViewWorldSimulation {
 
 	private void runForAwhile() {
 		for (int i = 0; i < 50; i++) {
+			@SuppressWarnings("unused")
 			List<Thing> overflow = update();
 //			if (!overflow.isEmpty()) {
 //				for (Thing t : overflow) {
@@ -61,6 +71,7 @@ public class ViewWorldSimulation {
 
 	private void runAllOut() {
 		while (theWorld.isLive()) {
+			@SuppressWarnings("unused")
 			List<Thing> overflow = update();
 //			if (!overflow.isEmpty()) {
 //				for (Thing t : overflow) {
@@ -72,6 +83,7 @@ public class ViewWorldSimulation {
 
 	private List<Thing> update() {
 		waitForNext();
+		recorder.record(theWorld);
 		return theWorld.update();
 	}
 
@@ -82,4 +94,51 @@ public class ViewWorldSimulation {
 		}
 	}
 
+	private class RecorderHelper {
+		
+		private static final boolean DEBUG = false;
+		private final String filePath;
+		private DataFileWriter writer = null;
+		
+		RecorderHelper(String location) {
+			filePath = location;
+		}
+		
+		public void record(World theWorld) {
+			if (writer != null) {
+				FactoryState state = new FactoryState(theWorld);
+				try {
+					writer.writeFactoryState(state);
+				} catch (IOException e) {
+					if (DEBUG) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		void init() {
+			try {
+				writer = new DataFileWriter(filePath);
+			} catch (IOException e) {
+				writer = null;
+				if (DEBUG) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		public void close() {
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+					if (DEBUG) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+	}
 }

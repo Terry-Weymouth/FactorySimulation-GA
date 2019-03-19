@@ -11,7 +11,7 @@ public class World {
 	private List<Belt> allBelts = new ArrayList<Belt>();
 	
 	private final MarkerBelt marker;
-
+	
 	public World() {
 		double x = 50.0;
 		double y = 150.0;

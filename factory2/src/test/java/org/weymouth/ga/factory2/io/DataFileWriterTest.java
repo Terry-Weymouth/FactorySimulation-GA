@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.weymouth.ga.factory2.core.FactoryState;
+import org.weymouth.ga.factory2.core.World;
 
 public class DataFileWriterTest {
 
@@ -16,12 +17,16 @@ public class DataFileWriterTest {
 		System.out.println("Temp file : " + temp.getAbsolutePath());
 
 		String absolutePath = temp.getAbsolutePath();
+		
+		World theWorld = new World();
 
-		FactoryState testState = new FactoryState();
+		FactoryState testState = new FactoryState(theWorld);
 		
 		DataFileWriter writer = new DataFileWriter(absolutePath);
 		writer.writeFactoryState(testState);
+		writer.close();
 		
+		writer = new DataFileWriter(absolutePath);
 		writer.writeFactoryState(testState);
 		writer.close();
 	}
