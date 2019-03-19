@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.weymouth.ga.factory2.core.FactoryState;
 import org.weymouth.ga.factory2.core.World;
+import org.weymouth.ga.factory2.state.FactoryState;
 
 public class DataFileWriterTest {
 

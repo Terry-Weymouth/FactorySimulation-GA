@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Random;
 
 import org.weymouth.ga.factory2.core.Color;
-import org.weymouth.ga.factory2.core.FactoryState;
 import org.weymouth.ga.factory2.core.Thing;
 import org.weymouth.ga.factory2.core.World;
 import org.weymouth.ga.factory2.core.WorldView;
 import org.weymouth.ga.factory2.core.WorldViewController;
 import org.weymouth.ga.factory2.io.DataFileWriter;
+import org.weymouth.ga.factory2.state.FactoryState;
 
 import processing.core.PApplet;
 
