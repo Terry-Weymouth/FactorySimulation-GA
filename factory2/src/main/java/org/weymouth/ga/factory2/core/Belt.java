@@ -8,6 +8,9 @@ public interface Belt {
 		EAST, WEST, SOUTH, NORTH
 	};
 
+	public void setName(String name);
+	public String getName();
+	
 	public void setSpeed(double s);
 	
 	public void add(Thing t);

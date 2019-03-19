@@ -6,6 +6,9 @@ import java.util.Random;
 
 public class SensorBelt implements Belt {
 
+	private String name = null;
+	private Thing lastSensed = null;
+
 	private final Random random = new Random();
 	private final Location start, stop;
 	private final double length;
@@ -75,6 +78,7 @@ public class SensorBelt implements Belt {
 	
 	private void sense(Thing t) {
 		setColor(t.color);
+		lastSensed = t;
 	}
 	
 	private void setColor(Color color) {
@@ -140,5 +144,21 @@ public class SensorBelt implements Belt {
 
 	public List<Thing> getThingsCopy() {
 		return new ArrayList<Thing>(objects);
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
+	}
+
+	public Thing getLastSensed() {
+		Thing ret = lastSensed;
+		lastSensed = null;
+		return ret;
 	}
 }

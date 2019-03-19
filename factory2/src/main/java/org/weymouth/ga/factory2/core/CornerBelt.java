@@ -8,6 +8,8 @@ public class CornerBelt implements Belt {
 	
 	private static final double DELTA_THETA = Math.PI/180.0;
 
+	private String name = null;
+	
 	private final Random random = new Random();
 	private final Location start;
 	private final double length;
@@ -116,6 +118,16 @@ public class CornerBelt implements Belt {
 
 	public List<Thing> getThingsCopy() {
 		return new ArrayList<Thing>(objects);
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
 	}
 
 }

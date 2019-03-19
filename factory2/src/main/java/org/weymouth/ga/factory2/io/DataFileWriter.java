@@ -17,16 +17,20 @@ public class DataFileWriter {
 		FileWriter fw = new FileWriter(fileLocation, true);
 	    BufferedWriter bw = new BufferedWriter(fw);
 	    out = new PrintWriter(bw);
-	    out.println("--- Recording Facory Status from Simulation ---");
+	    writeHeaderString("Recording Facory Status from Simulation");
 	}
 	
 	public void writeFactoryState(FactoryState d) throws IOException {
 	    out.println(d.toDataOutput());
 	}
 
-	public void close() throws IOException {
-	    out.println("--- Closing Recording ---");
-		out.close();
+	public void writeHeaderString(String string) throws IOException {
+		out.println("--- " + string + " ---");
 	}
 	
+	public void close() throws IOException {
+		writeHeaderString("Closing Recording");
+		out.close();
+	}
+
 }

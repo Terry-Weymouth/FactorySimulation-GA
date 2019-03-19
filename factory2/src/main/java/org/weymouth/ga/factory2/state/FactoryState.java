@@ -1,5 +1,7 @@
 package org.weymouth.ga.factory2.state;
 
+import java.util.List;
+
 import org.weymouth.ga.factory2.core.World;
 
 public class FactoryState {
@@ -11,8 +13,14 @@ public class FactoryState {
 	}
 
 	public String toDataOutput() {
-		
-		return "test data output";
+		List<State> stateList = world.allStates();
+		String ret = "{factory-state: {";
+		for (State s: stateList) {
+			ret += s.toNameString() + ": " + s.toDataString() + ", ";
+		}
+		ret = ret.substring(0, ret.length()-2);
+		ret += "}}";
+		return ret;
 	}
 
 }

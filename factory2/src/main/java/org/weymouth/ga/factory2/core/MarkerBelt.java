@@ -6,6 +6,9 @@ import java.util.Random;
 
 public class MarkerBelt implements Belt {
 
+	private String name = null;
+	private Thing lastMarked = null;
+	
 	private final Random random = new Random();
 	private final Location start, stop;
 	private final double length;
@@ -74,6 +77,7 @@ public class MarkerBelt implements Belt {
 	
 	private void testSelected(Thing t) {
 		t.matched = (t.color.r <= threshold.r && t.color.g <= threshold.g && t.color.b <= threshold.b);
+		lastMarked = t;
 	}
 	
 	public List<Thing> update() {
@@ -128,4 +132,21 @@ public class MarkerBelt implements Belt {
 	public List<Thing> getThingsCopy() {
 		return new ArrayList<Thing>(objects);
 	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
+	}
+	
+	public Thing getLastMarked() {
+		Thing ret = lastMarked;
+		lastMarked = null;
+		return ret;
+	}
+
 }

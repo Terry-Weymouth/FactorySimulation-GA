@@ -33,21 +33,29 @@ public class ViewWorldSimulation {
 		while (!worldController.isReady()) {
 			waitForNext();
 		}
+		int totalCount = 20;
 		recorder.init();
+		int count = 0;
+		recorder.reportThreshold(worldController.getView().getTheWorld().getSorterThreshold());
+		recorder.reportTotalIterations(totalCount);
 		while(!worldController.isDone()) {
+			recorder.reportIteration(count);
 			runInNewThings();
 			runAllOut();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException ignore) {
 			}
+			count++;
+			if (count >= 20) worldController.setIsDone(true);
 		}
 		worldController.close();
+		recorder.reprotIterationEnd();
 		recorder.close();
 	}
 
 	private void runInNewThings() {
-		for (int i = 0; i < 60; i++) {
+		for (int i = 0; i < 100; i++) {
 			int r = random.nextInt(256);
 			int g = random.nextInt(256);
 			int b = random.nextInt(256);
@@ -58,7 +66,7 @@ public class ViewWorldSimulation {
 	}
 
 	private void runForAwhile() {
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 12; i++) {
 			@SuppressWarnings("unused")
 			List<Thing> overflow = update();
 //			if (!overflow.isEmpty()) {
@@ -89,7 +97,7 @@ public class ViewWorldSimulation {
 
 	private void waitForNext() {
 		try {
-			Thread.sleep(20);
+			Thread.sleep(2);
 		} catch (InterruptedException ignore) {
 		}
 	}
@@ -138,6 +146,34 @@ public class ViewWorldSimulation {
 					}
 				}
 			}
+		}
+		
+		public void reportThreshold(Color c) {
+			writeHeaderString(String.format("Sorter Threshold: color = r:%d, g:%d, b:%d", c.r, c.g, c.b));
+		}
+
+		public void reportTotalIterations(int totalCount) {
+			writeHeaderString("Iteration - total count = " + totalCount);
+		}
+
+		public void reportIteration(int count) {
+			writeHeaderString("Iteration - current count = " + count);
+		}
+
+		public void reprotIterationEnd() {
+			writeHeaderString("End Iteration");
+		}
+		
+		public void writeHeaderString(String st) {
+			if (writer != null) {
+				try {
+					writer.writeHeaderString(st);
+				} catch (IOException e) {
+					if (DEBUG) {
+						e.printStackTrace();
+					}
+				}
+			}			
 		}
 
 	}

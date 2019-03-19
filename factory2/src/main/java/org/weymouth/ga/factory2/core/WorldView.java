@@ -37,6 +37,10 @@ public class WorldView extends PApplet {
 		theWorld = w;
 	}
 	
+	public World getTheWorld() {
+		return theWorld;
+	}
+	
 	public void setController(WorldViewController worldViewController) {
 		viewController = worldViewController;
 	}

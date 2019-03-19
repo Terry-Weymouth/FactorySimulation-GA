@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 public class StreightBelt implements Belt {
+	
+	private String name = null;
 
 	private final Random random = new Random();
 	private final Location start, stop;
@@ -121,6 +123,16 @@ public class StreightBelt implements Belt {
 
 	public List<Thing> getThingsCopy() {
 		return new ArrayList<Thing>(objects);
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String getName() {
+		return this.name;
 	}
 
 }
